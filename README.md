@@ -1,16 +1,15 @@
-# Projeto Olimpíadas - Refatoração (POOA)
+# Trabalho de POOA - Sistema das Olimpíadas
 
-Este projeto foi refatorado para aplicar os conceitos de SOLID e organização de código que aprendemos na disciplina de Programação Orientada a Objetos Avançada.
+Fala professor! Segue a minha refatoração do sistema legado. Eu organizei tudo usando Maven e apliquei os princípios do SOLID que foram pedidos, mas sem mudar nada da lógica original de como o sistema funciona.
 
-## O que foi mudado no código:
+## Onde usei o SOLID no código:
 
-1. **Separação de Responsabilidades (SRP):** Antes, a classe `ConsoleUI` fazia de tudo (entrada de dados e salvamento). Agora, ela foca só na interação com o usuário. Toda a parte de salvar e buscar dados foi para os Repositories.
+* **S (Responsabilidade Única):** Eu dei uma limpada nas classes. A `ConsoleUI`, por exemplo, agora só cuida de falar com o usuário. A parte de salvar e buscar os dados ficou exclusiva pros Repositories.
+* **O (Aberto/Fechado):** O código tá pronto pra crescer sem precisar ser reescrito. Se a gente quiser mudar o banco de dados depois, é só criar uma classe nova que siga a interface `Repository` sem mexer no que já tá rodando.
+* **L (Substituição de Liskov):** Como usei a interface `Repository<T>`, qualquer repositório (de Participante ou de Prova) pode ser usado no lugar do outro sem que a UI dê erro.
+* **I (Segregação de Interface):** Não fiz aquelas interfaces gigantes com métodos que ninguém usa. As interfaces são específicas e cada classe só implementa o que realmente precisa.
+* **D (Inversão de Dependência):** Essa aqui foi a principal. A `ConsoleUI` não cria mais os repositórios na mão. Ela agora recebe eles prontos no construtor (Injeção de Dependência). Isso deixou o código muito mais solto.
 
-2. **Inversão de Dependência (DIP):** A `ConsoleUI` não cria mais seus próprios repositórios no susto. Ela agora recebe as interfaces no construtor. Isso deixa o código muito mais fácil de testar e mudar no futuro sem quebrar tudo.
-
-3. **Uso de Generics:** Criei uma interface genérica `Repository<T>` para não ter que ficar repetindo código igual para Participante e para Prova. Ficou bem mais limpo.
-
-4. **Estrutura Maven:** O projeto foi organizado nas pastas padrão (`src/main/java` e `src/test/java`) e o `pom.xml` está configurado com o JUnit 5 para rodar os testes unitários.
-
-## Como rodar:
-Como é um projeto Maven, basta importar na IDE (IntelliJ ou VS Code) e rodar a classe `App.java`. Os testes também podem ser rodados direto pelo Maven.
+## Estrutura e Testes
+* Coloquei o projeto no padrão **Maven** (com o `pom.xml` certinho).
+* Usei o **JUnit 5** pra garantir que os cálculos de medalhas e pontos continuam batendo com o sistema original.
